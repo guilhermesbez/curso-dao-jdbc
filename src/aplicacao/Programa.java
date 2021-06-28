@@ -1,38 +1,19 @@
 package aplicacao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.util.Date;
 
-import db.DB;
-import db.DbIntegrityException;
+import modelo.entidades.Departamento;
+import modelo.entidades.Vendedor;
 
 public class Programa {
 
 	public static void main(String[] args) {
 		
-		Connection conn = null;
-		PreparedStatement st = null;
-		try {
-			conn = DB.getConnection();
-
-			st = conn.prepareStatement(
-					"Delete from departamento " +
-					"where " +
-					"Id = ?");
-
-			st.setInt(1, 2);
-			
-			int rowsAffected = st.executeUpdate();
-			
-			System.out.println("Done! rows affected!" + rowsAffected);
-		} 
-		catch (SQLException e) {
-			throw new DbIntegrityException(e.getMessage());
-		}
-		finally {
-			DB.closeStatment(st);
-			DB.closeConnecion();
-		}
+		Departamento dep = new Departamento(1, "TI");
+		Vendedor vend = new Vendedor(1, "Guilherme", "Gui@gmail.com", new Date(), 3000.0, dep);
+		
+		System.out.println("Departamento: " + dep);
+		System.out.println("Vendedor: " + vend);
+		
 	}
 }
